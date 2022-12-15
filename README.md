@@ -3,7 +3,7 @@
 >Harun Çelik 211216036
 >Ahmet Bayram 211216045
 
-
+// Bu görsele benzer birazda kendimiz özelleştirerek bir geliştirme ortaya çıkarmaya çalıştık.
 
 # SCREENSHOTS
 
