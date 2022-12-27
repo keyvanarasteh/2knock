@@ -14,6 +14,13 @@ class ScreenList extends StatefulWidget {
 
 class _ScreenListState extends State<ScreenList> {
   bool _isSelected = false;
+  final colors = ["Yellow", "Red", "Black", "Grey", "White"];
+  final numbers = ['6',
+      '6.5',
+      '7',
+      '7.5',];
+  String? value;
+  String? _color;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +31,11 @@ class _ScreenListState extends State<ScreenList> {
     String _size = "Size";
     String _description = "Description";
 
-    int tag = 1;
+    int _selectedIndex;
     List<String> tags = [];
-    List<String> numbers = [
-      '6',
-      '6.5',
-      '7',
-      '7.5',
-    ];
+ 
+
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -44,7 +48,7 @@ class _ScreenListState extends State<ScreenList> {
                 children: [
                   Text(
                     widget.list.title,
-                    style: Theme.of(context).textTheme.headline4?.copyWith(
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   Text(widget.list.model),
@@ -106,7 +110,7 @@ class _ScreenListState extends State<ScreenList> {
                             child: Text(
                           widget.list.description,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: height < 804 ? 3 : 5,
+                          maxLines: height < 804 ? 3 : 4,
                         )),
                       ],
                     ),
@@ -116,41 +120,68 @@ class _ScreenListState extends State<ScreenList> {
                       child: Container(
                           child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(_size),
+                          SizedBox(height: 10,),
                           Wrap(
-                            direction: Axis.horizontal,
-                            spacing: 10,
+                            spacing: 5,
                             runSpacing: 10,
-                            children: [
-                              sizeContainer(number: "6"),
-                              sizeContainer(number: "6.5"),
-                              sizeContainer(number: "7"),
-                              sizeContainer(number: "7.5"),
-                              Container(
-                                child: Card(
-                                  color: Color.fromARGB(192, 151, 196, 28),
-                                  // ignore: sort_child_properties_last, prefer_const_constructors
-                                  child: SizedBox(
-                                    width: 150,
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(
-                                        "Add to cart",
-                                      ),
-                                    ),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                ),
-                              ),
-                            ],
+                            children: List<Widget>.generate(
+                              numbers.length,
+                              
+                              (int index) {
+                                return ChoiceChip(
+                                  elevation: 10,
+                                  pressElevation: 5,
+                                  label: Text(numbers[index]),
+                                  labelPadding: EdgeInsets.symmetric(horizontal: 25,vertical: 4),
+                                  selectedColor: Color.fromRGBO(151, 196, 28, 0.753),
+                                  backgroundColor: Color.fromARGB(255, 105, 128, 42),
+                                  selected: _color == numbers[index],
+                                  onSelected: (bool selected) {
+                                    if(selected){
+                                          _color = numbers[index];
+                                          print("${numbers[index]} selected");
+                                    }
+                                    setState(() {},);
+                                  },
+                                );
+                              },
+                            ).toList(),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          //  Text(_color != null ? _color! : 'null'),
                         ],
                       ))),
+                 
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      width: width * 0.4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.grey.shade700),
+                      ),
+                      child: DropdownButton<String>(
+                        menuMaxHeight: 200,
+                        hint: Text(
+                          "Choose Colors",
+                          style: TextStyle(fontSize: width * 0.034),
+                        ),
+                        underline: SizedBox(),
+                        dropdownColor: Colors.transparent.withOpacity(0.58),
+                        isExpanded: true,
+                        value: value,
+                        items: colors.map(buildMenuItem).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            this.value = value;
+                          });
+                        },
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -159,6 +190,17 @@ class _ScreenListState extends State<ScreenList> {
       ),
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        child: Text(
+          item,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: Colors.grey.shade300),
+        ),
+        value: item,
+      );
 }
 
 class sizeContainer extends StatelessWidget {
@@ -196,41 +238,3 @@ class sizeContainer extends StatelessWidget {
     );
   }
 }
-// Container(
-//                       child: ListView.builder(
-//                           scrollDirection: Axis.horizontal,
-//                           physics: BouncingScrollPhysics(),
-//                           itemBuilder: (context, index) => InkWell(
-//                                 onTap: () {
-//                                   setState(() {
-//                                     selectItem = index;
-//                                   });
-//                                 },
-//                                 child: Container(
-//                                   child: Card(
-//                                     color: selectItem == index
-//                                         ? Color.fromARGB(255, 52, 112, 161)
-//                                         : Colors.grey,
-//                                     // ignore: sort_child_properties_last
-//                                     child: SizedBox(
-//                                       width: 60,
-//                                       child: Center(
-//                                         child: Text(
-//                                           numbers[index],
-//                                           style: selectItem == index
-//                                               ? TextStyle(
-//                                                   color: Colors.white,
-//                                                   fontSize: 15)
-//                                               : TextStyle(
-//                                                   color: Colors.grey.shade700),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     shape: RoundedRectangleBorder(
-//                                         borderRadius:
-//                                             BorderRadius.circular(10)),
-//                                   ),
-//                                 ),
-//                               ),
-//                           itemCount: numbers.length),
-//                     ),
