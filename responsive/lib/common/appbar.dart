@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 class AppBar1 extends StatefulWidget {
@@ -79,9 +77,15 @@ class _AppBar1State extends State<AppBar1> {
                           context: context,
                           builder: (BuildContext) {
                             return AlertDialog(
-                              title: new Text("Alert!"),content: Text("Empty Basket"), actions: [TextButton(onPressed: () {
-                                Navigator.of(context).pop();
-                              }, child: Text("OK"))],
+                              title: new Text("Alert!"),
+                              content: Text("Empty Basket"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("OK"))
+                              ],
                             );
                           },
                         );
@@ -165,15 +169,21 @@ class _AppBar1State extends State<AppBar1> {
                           )),
                     ),
                   ),
-                 InkWell(
+                  InkWell(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext) {
                             return AlertDialog(
-                              title: new Text("Alert!"),content: Text("Empty Basket"), actions: [TextButton(onPressed: () {
-                                Navigator.of(context).pop();
-                              }, child: Text("OK"))],
+                              title: new Text("Alert!"),
+                              content: Text("Empty Basket"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("OK"))
+                              ],
                             );
                           },
                         );
@@ -263,9 +273,15 @@ class _AppBar1State extends State<AppBar1> {
                           context: context,
                           builder: (BuildContext) {
                             return AlertDialog(
-                              title: new Text("Alert!"),content: Text("Empty Basket"), actions: [TextButton(onPressed: () {
-                                Navigator.of(context).pop();
-                              }, child: Text("OK"))],
+                              title: new Text("Alert!"),
+                              content: Text("Empty Basket"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("OK"))
+                              ],
                             );
                           },
                         );
@@ -275,8 +291,7 @@ class _AppBar1State extends State<AppBar1> {
               ),
             )),
       );
-    } 
-    else {
+    } else {
       return SafeArea(
         child: Container(
             height: 80,

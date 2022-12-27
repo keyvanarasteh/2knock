@@ -14,14 +14,13 @@ class Desktop extends StatefulWidget {
 }
 
 class _DesktopState extends State<Desktop> {
+  final colors = ["Yellow", "Red", "Black", "Grey", "White"];
   final numbers = [
     '6',
     '6.5',
     '7',
     '7.5',
   ];
-  final colors = ["Yellow", "Red", "Black", "Grey", "White"];
-
   String? value;
   String? _color;
   @override
@@ -151,9 +150,9 @@ class _DesktopState extends State<Desktop> {
                     height: 40,
                   ),
                   Expanded(
-                    flex: 4,
-                    child: Container(
-                      child: Column(
+                      flex: 4,
+                      child: Container(
+                          child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -161,73 +160,75 @@ class _DesktopState extends State<Desktop> {
                           SizedBox(
                             height: 10,
                           ),
-                          Wrap(
-                            spacing: 5,
-                            runSpacing: 10,
-                            children: List<Widget>.generate(
-                              numbers.length,
-                              (int index) {
-                                return ChoiceChip(
-                                  elevation: 10,
-                                  pressElevation: 5,
-                                  label: Text(numbers[index]),
-                                  labelPadding: EdgeInsets.symmetric(
-                                      horizontal: 25, vertical: 4),
-                                  selectedColor:
-                                      Color.fromRGBO(151, 196, 28, 0.753),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 105, 128, 42),
-                                  selected: _color == numbers[index],
-                                  onSelected: (bool selected) {
-                                    if (selected) {
-                                      _color = numbers[index];
-                                      print("${numbers[index]} selected");
-                                    }
-                                    setState(
-                                      () {},
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                spacing: 5,
+                                runSpacing: 10,
+                                children: List<Widget>.generate(
+                                  numbers.length,
+                                  (int index) {
+                                    return ChoiceChip(
+                                      elevation: 10,
+                                      pressElevation: 5,
+                                      label: Text(numbers[index]),
+                                      labelPadding: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 4),
+                                      selectedColor:
+                                          Color.fromRGBO(151, 196, 28, 0.753),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 68, 82, 32),
+                                      selected: _color == numbers[index],
+                                      onSelected: (bool selected) {
+                                        if (selected) {
+                                          _color = numbers[index];
+                                          print("${numbers[index]} selected");
+                                        }
+                                        setState(
+                                          () {},
+                                        );
+                                      },
                                     );
                                   },
-                                );
-                              },
-                            ).toList(),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Flexible(
-                            flex: 2,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              width: width * 0.4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(18),
-                                border: Border.all(color: Colors.grey.shade700),
+                                ).toList(),
                               ),
-                              child: DropdownButton<String>(
-                                menuMaxHeight: 200,
-                                hint: Text(
-                                  "Choose Colors",
-                                  style: TextStyle(fontSize: 24),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                width: width * 0.25,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  border:
+                                      Border.all(color: Colors.grey.shade700),
                                 ),
-                                underline: SizedBox(),
-                                dropdownColor:
-                                    Colors.transparent.withOpacity(0.58),
-                                isExpanded: true,
-                                value: value,
-                                items: colors.map(buildMenuItem).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.value = value;
-                                  });
-                                },
+                                child: DropdownButton<String>(
+                                  menuMaxHeight: 200,
+                                  hint: Text(
+                                    "Choose Colors",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  underline: SizedBox(),
+                                  dropdownColor:
+                                      Colors.transparent.withOpacity(0.58),
+                                  isExpanded: true,
+                                  value: value,
+                                  items: colors.map(buildMenuItem).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      this.value = value;
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                          )
-                          //  Text(_color != null ? _color! : 'null'),
+                            ],
+                          ),
+
+                          // Text(_color != null ? _color! : 'null'),
                         ],
-                      ),
-                    ),
-                  ),
+                      ))),
                 ],
               ),
             ),
@@ -247,40 +248,4 @@ class _DesktopState extends State<Desktop> {
         ),
         value: item,
       );
-}
-
-class sizeContainer extends StatelessWidget {
-  const sizeContainer({
-    Key? key,
-    required this.number,
-  }) : super(key: key);
-
-  final String number;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        // color: selectItem == true
-        //     ? Color.fromARGB(255, 52, 112, 161)
-        //     : color_Theme,
-        color: Color.fromARGB(192, 151, 196, 28),
-        // ignore: sort_child_properties_last
-        child: SizedBox(
-          width: 60,
-          height: 30,
-          child: Center(
-            child: Text(
-              number,
-              // style: selectItem == index
-              //     ? TextStyle(
-              //         color: Colors.white, fontSize: 15)
-              //     : TextStyle(color: Colors.grey.shade700),
-            ),
-          ),
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      ),
-    );
-  }
 }
