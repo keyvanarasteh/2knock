@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          infoVisible || categoryVisible
+          categoryVisible
               ? Positioned(
                   right: 0,
                   left: 0,
@@ -106,15 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   bottom: 0,
                   width: width / 2,
                   child: Categories())
-              : Positioned(
-                  top: 0, left: 0, right: 0, bottom: 0, child: SizedBox()),
-          infoVisible
-              ? Positioned(
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: width / 2 - 50,
-                  child: ChatInfo())
               : Positioned(
                   top: 0, left: 0, right: 0, bottom: 0, child: SizedBox()),
         ]);

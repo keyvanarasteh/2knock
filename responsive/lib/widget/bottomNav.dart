@@ -19,7 +19,7 @@ class _bottomNavigationState extends State<bottomNavigation> {
     GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
     var width = MediaQuery.of(context).size.width;
     int _page = 0;
-    double bottomUzunluk = 768;
+    double bottomUzunluk = 576;
 
     return width <= bottomUzunluk
         ? CurvedNavigationBar(

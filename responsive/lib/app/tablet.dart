@@ -157,66 +157,11 @@ class _TabletState extends State<Tablet> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Wrap(
-                                spacing: 5,
-                                runSpacing: 10,
-                                children: List<Widget>.generate(
-                                  numbers.length,
-                                  (int index) {
-                                    return ChoiceChip(
-                                      elevation: 10,
-                                      pressElevation: 5,
-                                      label: Text(numbers[index]),
-                                      labelPadding: EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 4),
-                                      selectedColor:
-                                          Color.fromRGBO(151, 196, 28, 0.753),
-                                      backgroundColor:
-                                          Color.fromARGB(255, 68, 82, 32),
-                                      selected: _color == numbers[index],
-                                      onSelected: (bool selected) {
-                                        if (selected) {
-                                          _color = numbers[index];
-                                          print("${numbers[index]} selected");
-                                        }
-                                        setState(
-                                          () {},
-                                        );
-                                      },
-                                    );
-                                  },
-                                ).toList(),
-                              ),
+                              WrapList(),
                               SizedBox(
                                 width: 20,
                               ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                width: width * 0.25,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  border:
-                                      Border.all(color: Colors.grey.shade700),
-                                ),
-                                child: DropdownButton<String>(
-                                  menuMaxHeight: 200,
-                                  hint: Text(
-                                    "Choose Colors",
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  underline: SizedBox(),
-                                  dropdownColor:
-                                      Colors.transparent.withOpacity(0.58),
-                                  isExpanded: true,
-                                  value: value,
-                                  items: colors.map(buildMenuItem).toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      this.value = value;
-                                    });
-                                  },
-                                ),
-                              ),
+                              chooseColor(width),
                             ],
                           ),
 
@@ -229,6 +174,64 @@ class _TabletState extends State<Tablet> {
           ],
         ),
       ),
+    );
+  }
+
+  Container chooseColor(double width) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      width: width * 0.25,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.grey.shade700),
+      ),
+      child: DropdownButton<String>(
+        menuMaxHeight: 200,
+        hint: Text(
+          "Choose Colors",
+          style: TextStyle(fontSize: 14),
+        ),
+        underline: SizedBox(),
+        dropdownColor: Colors.transparent.withOpacity(0.58),
+        isExpanded: true,
+        value: value,
+        items: colors.map(buildMenuItem).toList(),
+        onChanged: (value) {
+          setState(() {
+            this.value = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Wrap WrapList() {
+    return Wrap(
+      spacing: 5,
+      runSpacing: 10,
+      children: List<Widget>.generate(
+        numbers.length,
+        (int index) {
+          return ChoiceChip(
+            elevation: 10,
+            pressElevation: 5,
+            label: Text(numbers[index]),
+            labelPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 4),
+            selectedColor: Color.fromRGBO(151, 196, 28, 0.753),
+            backgroundColor: Color.fromARGB(255, 68, 82, 32),
+            selected: _color == numbers[index],
+            onSelected: (bool selected) {
+              if (selected) {
+                _color = numbers[index];
+                print("${numbers[index]} selected");
+              }
+              setState(
+                () {},
+              );
+            },
+          );
+        },
+      ).toList(),
     );
   }
 
