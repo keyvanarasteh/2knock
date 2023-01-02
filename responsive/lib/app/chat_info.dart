@@ -1,54 +1,88 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class ChatInfo extends StatelessWidget {
+class ChatInfo extends StatefulWidget {
   const ChatInfo({super.key});
 
   @override
+  State<ChatInfo> createState() => _ChatInfoState();
+}
+
+class _ChatInfoState extends State<ChatInfo> {
+  @override
+  late Future<dynamic> profile;
+
+  Future<dynamic> downloadProfile() async {
+    var response = await Dio().get('https://reqres.in/api/users/2');
+
+    return response.data;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    profile = downloadProfile();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    left: BorderSide(color: Colors.grey.shade800),
-                    right: BorderSide(color: Colors.grey.shade800))),
-            width: double.infinity,
-            child: ListView(
-              children: [
-                profileItem(
-                  avatar: 'images/nft3.jpg',
-                  name: "Eminem",
-                  price: "1000 £",
-                ),
-                categoryItem(
-                    name: "Email",
-                    icon: Icon(Icons.email_outlined),
-                    price: 'harun.celik@gmail.com'),
-                categoryItem(
-                    name: "Phone",
-                    icon: Icon(Icons.phone_iphone_outlined),
-                    price: '+90 (537) 886 42 32'),
-                categoryItem(
-                    name: "Balance",
-                    icon: Icon(Icons.account_balance_wallet_outlined),
-                    price: '540\$'),
-              ],
-            )));
+        body: FutureBuilder(
+      future: profile,
+      builder: ((context, snapshot) {
+        switch (snapshot.connectionState) {
+          case (ConnectionState.active):
+            return Text("Active");
+          case (ConnectionState.waiting):
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          case (ConnectionState.done):
+            if (snapshot.hasError) {
+              return Text("Hata Oluştu");
+            }
+            return Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        left: BorderSide(color: Colors.grey.shade800),
+                        right: BorderSide(color: Colors.grey.shade800))),
+                width: double.infinity,
+                child: ListView(
+                  children: [
+                    profileItem(
+                      avatar: '${snapshot.data["data"]["avatar"]}',
+                      name: "${snapshot.data["data"]["first_name"]}",
+                    ),
+                    categoryItem(
+                        name: "Email",
+                        icon: Icon(Icons.email_outlined),
+                        price: '${snapshot.data["data"]["email"]}'),
+                    categoryItem(
+                        name: "Phone",
+                        icon: Icon(Icons.phone_iphone_outlined),
+                        price: '+90 (537) 886 42 32'),
+                    categoryItem(
+                        name: "Balance",
+                        icon: Icon(Icons.account_balance_wallet_outlined),
+                        price: '540\$'),
+                  ],
+                ));
+          default:
+            return Text("Hata");
+        }
+      }),
+    ));
   }
 }
 
 class profileItem extends StatelessWidget {
   final String name;
   final String avatar;
-  final String price;
   const profileItem({
     Key? key,
     required this.name,
     required this.avatar,
-    required this.price,
   }) : super(key: key);
 
   @override
@@ -66,18 +100,9 @@ class profileItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 7,
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 4,
-                        offset: Offset(3, 6))
-                  ],
                 ),
                 child: CircleAvatar(
-                  radius: 48,
-                  backgroundImage: AssetImage(avatar),
-                ),
+                    radius: 48, backgroundImage: NetworkImage(avatar)),
               ),
               SizedBox(
                 height: 10,

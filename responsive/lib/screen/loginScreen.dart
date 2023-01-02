@@ -46,7 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   height: 200,
                   decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
+                      color: Color.fromARGB(255, 91, 122, 202).withOpacity(0.7),
+                      gradient: LinearGradient(colors: [
+                        (Color.fromARGB(255, 168, 183, 221)),
+                        Color.fromARGB(255, 54, 81, 90)
+                      ]),
                       borderRadius: BorderRadius.circular(13)),
                   child: Center(
                     child: Icon(

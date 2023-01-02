@@ -37,7 +37,7 @@ class _LogoScreenState extends State<LogoScreen> {
               color: Color.fromARGB(255, 91, 122, 202),
               gradient: LinearGradient(
                 colors: [
-                  (new Color(0xff1f3b83)),
+                  (Color.fromARGB(255, 168, 183, 221)),
                   Color.fromARGB(255, 4, 10, 12)
                 ],
                 begin: Alignment.topCenter,
@@ -45,7 +45,11 @@ class _LogoScreenState extends State<LogoScreen> {
               ),
             ),
           ),
-          Center(child: FlutterLogo())
+          Center(
+              child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 45,
+                  child: Image.asset("images/nike.png")))
         ],
       ),
     );
